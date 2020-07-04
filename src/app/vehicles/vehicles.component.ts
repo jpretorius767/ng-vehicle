@@ -1,17 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { VehiclesService } from '../services/vehicles.service';
+import { VehiclesApiService } from '../services/vehicles.service';
 import { Subscription } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-export interface Vehicle {
-  make: string;
-  year: number;
-  model: string;
-  bodyType: string;
-}
+import { Vehicle } from '../models';
 
 @Component({
   selector: 'vehicles-component',
@@ -21,22 +15,23 @@ export interface Vehicle {
 export class VehiclesComponent implements OnInit, OnDestroy {
   vehicles:  MatTableDataSource<Vehicle>;
   subscription: Subscription;
+  isLoading = false;
+  displayedColumns: string[] = ['position', 'make', 'model', 'year', 'bodyType'];
 
-  displayedColumns: string[] = ['make', 'model', 'year', 'bodyType'];
-
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild('paginator', { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private vehiclesService: VehiclesService, private _snackBar: MatSnackBar) {
-
+  constructor(private vehiclesService: VehiclesApiService, private _snackBar: MatSnackBar) {
   }
 
-  getVehicles(): void {
-    this.subscription = this.vehiclesService.getVehicles()
-        .subscribe(data => this.vehicles =  new MatTableDataSource(data.data), err => this.handleError(err));
+  getVehicles(): Subscription {
+    this.isLoading = true;
+    return this.vehiclesService.getVehicles()
+        .subscribe(data => this.processData(data.data), err => this.handleError(err));
   }
 
   handleError (err: Error): void {
+    this.isLoading = false;
     this.openSnackBar('Oops! An error has occurred in trying to retreive data', 'Close');
   }
 
@@ -47,22 +42,28 @@ export class VehiclesComponent implements OnInit, OnDestroy {
     });
   }
 
+  processData (data: Array<Vehicle>) {
+    this.isLoading = false;
+    data.forEach((vehicle, index) => {
+      let idx = index + 1; 
+      vehicle.position = idx;
+    });
+    this.vehicles =  new MatTableDataSource(data);
+    this.vehicles.paginator = this.paginator;
+    this.vehicles.sort = this.sort;
+  }
+
   ngOnDestroy () {
     this.subscription.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.getVehicles();
-    // if (this.vehicles) {
-      // this.vehicles.paginator = this.paginator;
-      // this.vehicles.sort = this.sort;
-      setTimeout(() => {
-        this.vehicles.sort = this.sort;
-        this.vehicles.paginator = this.paginator;
-      });
-    // }
+    this.subscription = this.getVehicles();
   }
 
+  /*
+  Filter the table - not currently used
+   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.vehicles.filter = filterValue.trim().toLowerCase();

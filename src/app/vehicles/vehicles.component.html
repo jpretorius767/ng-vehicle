@@ -16,10 +16,12 @@
 <div class="mat-elevation-z8">
 
 <table #table 
- mat-table [dataSource]="vehicles" matSort matSortActive="make" matSortDirection="desc">
+ mat-table [dataSource]="vehicles" matSort matSortActive="no" matSortDirection="desc">
 
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
+ <ng-container matColumnDef="position">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+  <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+</ng-container>
 
   <ng-container matColumnDef="make">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Make </th>
@@ -50,3 +52,13 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+<mat-card *ngIf="isLoading" class="mat-card-style">
+  <mat-progress-spinner color="primary" mode="indeterminate">
+  </mat-progress-spinner>
+</mat-card>
+
+
+<mat-paginator #paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>
