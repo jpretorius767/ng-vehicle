@@ -4,5 +4,7 @@ export interface Vehicle {
   year: number;
   model: string;
   bodyType: string;
+  fuelType: string;
+  engine: string;
 }
   

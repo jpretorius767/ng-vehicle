@@ -1,18 +1,5 @@
 
- <!-- <mat-form-field>
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. BMW" #input>
-</mat-form-field> -->
-<!-- <p>
-<mat-form-field appearance="outline">
-  <mat-label>Outline form field</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. BMW" #input>
-  <mat-hint>Hint</mat-hint>
-</mat-form-field>
-</p> -->
-
-<a routerLink="/home">Home</a>
-<h2>Vehicles:</h2>
+<h2>BMW Models:</h2>
 <div class="mat-elevation-z8">
 
 <table #table 
@@ -34,15 +21,26 @@
     <td mat-cell *matCellDef="let element"> {{element.model}} </td>
   </ng-container>
 
+  <ng-container matColumnDef="engine">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Engine </th>
+    <td mat-cell *matCellDef="let element"> {{element.engine}} </td>
+  </ng-container>
+
+
+
+  <ng-container matColumnDef="fuelType">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Fuel Type </th>
+    <td mat-cell *matCellDef="let element"> {{element.fuelType}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="bodyType">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Body </th>
+    <td mat-cell *matCellDef="let element"> {{element.bodyType}} </td>
+  </ng-container>
 
   <ng-container matColumnDef="year">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Year </th>
     <td mat-cell *matCellDef="let element"> {{element.year}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="bodyType">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Body Type </th>
-    <td mat-cell *matCellDef="let element"> {{element.bodyType}} </td>
   </ng-container>
 
     <!-- Row shown when there is no matching data. -->

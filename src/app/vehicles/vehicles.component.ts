@@ -16,7 +16,7 @@ export class VehiclesComponent implements OnInit, OnDestroy {
   vehicles:  MatTableDataSource<Vehicle>;
   subscription: Subscription;
   isLoading = false;
-  displayedColumns: string[] = ['position', 'make', 'model', 'year', 'bodyType'];
+  displayedColumns: string[] = ['position', 'make', 'model', 'year', 'bodyType', 'fuelType', 'engine'];
 
   @ViewChild('paginator', { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
