@@ -1,12 +1,45 @@
-.content {
-    display: flex;
-    margin: 82px auto 32px;
-    padding: 0 16px;
-    max-width: 960px;
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
+
+@media screen and (max-width: 1024px) { /* Specific to this particular image */
+  img.bg {
+    left: 50%;
+    margin-left: -512px;   /* 50% */
   }
+}
+
+.logo-container {
+  margin-top: 10px;
+}
+
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 620;
+  background-color: transparent !important;
+  border-bottom: #ffffff solid 0.5px;
+}
+
+.content {
+  display: flex;
+  margin: 50px auto 32px;
+  padding: 0 16px;
+  max-width: 960px;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+img.bg {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    
+    /* Preserve aspet ratio */
+    min-width: 100%;
+    min-height: 100%;
+}  
+
 
 nav {
   max-width: 1200px;
@@ -16,6 +49,7 @@ nav {
 nav a {
   font-size: 15px;
   padding-right: 50px;
+  color: #ffffff;
   cursor: pointer;
   :hover {
     border-bottom: 1em black;

@@ -1,9 +1,34 @@
 :host {
-    width: 100%;
+  width: 100%;
 }
 
+img.bg {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+   
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -10;
+}
 table {
   width: 100%;
 }
+
+h2 {
+  margin-top: 5%;
+}
+
+:host .mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 620;
+  background-color: transparent !important;
+  border-bottom: black solid 0.5px;
+}
+
 
 snack-bar-container.warning { background-color: red }
